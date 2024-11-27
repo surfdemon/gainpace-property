@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/property/css/property.css">
+{% endblock head %}
+
+
+
+{% block content %}
+{% load static %}
+
+
+
+<div class="masthead">
+  <div class="container">
+    <div class="row g-0">
+      <div class="col-md-6 masthead-text">
+        <!-- Post title goes in these h1 tags -->
+        {% if property.status == 0 %}
+          <h1 class="post-title m-4 text-secondary">{{ property.title }}</h1>
+          <h2 class="post-title m-4 text-secondary">Property Awaiting Appoval</h2>
+        {% else %}
+          <h1 class="post-title m-4">{{ property.title }}</h1>
+        {% endif %}
+      
+        <!-- Post author goes before the | the post's created date goes after -->
+      </div>
+      <div class="row g-0" style="justify-content: center;">
+        <div class="d-none d-md-block col-md-8 masthead-image">
+          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" style="height: 650px;">
+              {% for image in images %}
+              {% if forloop.first %}
+              <div class="carousel-item active">
+                <img class="rounded-3" style="width: 100%; height: 650px; object-fit: cover;"
+                  src="{{ image.image.url }}" alt="{{ image.image.title }}">
+              </div>
+              {% else %}
+              <div class="carousel-item">
+                <img class="rounded-3" style="width:100%; height: 650px; object-fit: cover;" src="{{ image.image.url }}"
+                  alt="{{ image.image.title }}">
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row m-4">
+    <div class="col-12 text-center">
+      <a class="btn btn-primary p-3 bold" href="{{ property.g_form }}" target="_blank">Book Viewing</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col card mb-4 mt-3 left top">
+      <div class="card-body">
+        <h3>Overview</h3>
+        <hr>
+        <div class="row">
+          <div class="col-6">
+            <ul>
+              <li>Bedrooms: {{ property.bedrooms }}</li>
+              <li>Max Tenants: {{ property.max_tenants }}</li>
+            </ul>
+          </div>
+          <div class="col-6">
+            <ul>
+              <li>Bathrooms: {{ property.bathrooms }}</li>
+              <li>Minimum Tenancy: {{ property.min_tenancy }} Months</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col card mb-5  mt-3 left  top">
+      <div class="card-body">
+        <!-- Use the | safe filter inside the template tags -->
+        <h3>Description</h3>
+        <hr>
+        <p class="card-text">
+          {{ property.description | safe }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-around">
+    <div class="card col-5 mb-4 mt-3 top">
+      <div class="card-body">
+        <h4>Price &amp; Bills</h4>
+        <hr>
+        <ul>
+          <li>Rent: £{{ property.rent }}</li>
+          <li>Deposit: £{{ property.deposit }}</li>
+          {% if property.bills %}
+          <li>Bills: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>Bills: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+          {% if property.broadband %}
+          <li>Broadband: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>Broadband: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+          {% if property.tv %}
+          <li>TV: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>TV: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+          {% if property.dss %}
+          <li>DSS: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>DSS: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="card col-5 mb-4 mt-3 top">
+      <div class="card-body">
+        <h4>Tenants Preference</h4>
+        <hr>
+        <ul>
+          <li>Max Tenants: {{ property.max_tenants }}</li>
+          {% if property.student %}
+          <li>Students: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>Students: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+          {% if property.families %}
+          <li>Families: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>Families: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+          {% if property.pets %}
+          <li>Pets: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>Pets: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+          {% if property.smoking %}
+          <li>Smoking: <i class="fa-solid fa-check"></i></li>
+          {% else %}
+          <li>Smoking: <i class="fa-solid fa-xmark"></i></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    </div>
+    <div class="row justify-content-around">
+      <div class="card col-5 mb-4 mt-3 top">
+        <div class="card-body">
+          <h4>Availability</h4>
+          <hr>
+          <ul>
+            <li>Minimum Tenancy: {{ property.min_tenancy }}</li>
+            <li>Maximum Tenancy: {{ property.max_tenancy }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card col-5 mb-4 mt-3 top">
+        <div class="card-body">
+          <h4>Features</h4>
+          <hr>
+          <ul>
+            <li>Bedrooms: {{ property.bedrooms }}</li>
+            <li>Bathrooms: {{ property.bathrooms }}</li>
+            {% if property.garden %}
+            <li>Garden: <i class="fa-solid fa-check"></i></li>
+            {% else %}
+            <li>Garden: <i class="fa-solid fa-xmark"></i></li>
+            {% endif %}
+            {% if property.parking %}
+            <li>Parking: <i class="fa-solid fa-check"></i></li>
+            {% else %}
+            <li>Parking: <i class="fa-solid fa-xmark"></i></li>
+            {% endif %}
+            {% if property.furnished %}
+            <li>Furnished: <i class="fa-solid fa-check"></i></li>
+            {% else %}
+            <li>Furnished: <i class="fa-solid fa-xmark"></i></li>
+            {% endif %}
+            {% if property.parking %}
+            <li>Parking: <i class="fa-solid fa-check"></i></li>
+            {% else %}
+            <li>Parking: <i class="fa-solid fa-xmark"></i></li>
+            {% endif %}
+            <li>EPC: {{ property.epc }}</li>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row m-4">
+    <div class="col-12 text-center">
+      <a class="btn btn-primary p-3 bold" href="{{ property.g_form }}" target="_blank">Book Viewing</a>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extras %}
+  <script src="{% static '/property/js/property_details.js' %}"></script>
+{% endblock %}
