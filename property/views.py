@@ -130,3 +130,43 @@ class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         messages.success(self.request, 'Property deleted successfully')
         return reverse_lazy('property_list')
+
+
+class EditImages(LoginRequiredMixin, generic.ListView):
+    model = PropertyImage
+    template_name = 'property/edit_images.html'
+    context_object_name = 'images'
+
+    def get_queryset(self):
+        return PropertyImage.objects.filter(property__slug=self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
+        return context
+
+
+class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = PropertyImage
+    form_class = PropertyImageForm
+    template_name = 'property/edit_image.html'
+    context_object_name = 'image'
+
+    def test_func(self):
+        return self.get_object().property.owner == self.request.user 
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Image updated successfully')
+        return super().form_valid(form)
+
+
+class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = PropertyImage
+
+    def test_func(self):
+        return self.get_object().property.owner == self.request.user
+
+    def get_success_url(self):
+        messages.success(self.request, 'Image deleted successfully')
+        return self.object.property.get_absolute_url()
+

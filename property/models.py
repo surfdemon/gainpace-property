@@ -104,3 +104,9 @@ class PropertyImage(models.Model):
             Return string for image using image and property fields.
         """
         return f'Image {self.image} for {self.property}'
+
+    def get_absolute_url(self):
+        """
+        Return absolute url for property detail.
+        """
+        return reverse('property_detail', args=[self.property.slug]) 

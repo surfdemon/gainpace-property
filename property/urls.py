@@ -24,5 +24,8 @@ urlpatterns = [
     path('<slug:slug>/edit/', views.EditProperty.as_view(), name='edit_property'),
     path('<slug:slug>/add_image/)', views.AddImage.as_view(), name='add_image'),
     path('<slug:slug>/delete/)', views.DeletePropertyView.as_view(), name='delete_property'),
+    path('<slug:slug>/edit_images/', views.EditImages.as_view(), name='edit_images'),
+    path('<slug:slug>/edit_image/<int:pk>/', views.EditImageView.as_view(), name='edit_image'),
+    path('<slug:slug>/delete_image/<int:pk>/', views.DeleteImageView.as_view(), name='delete_image'),
     path('', PropertyList.as_view(), name='property_list'),
 ]
