@@ -40,6 +40,11 @@ class PropertyList(generic.ListView):
         else:
             return Property.objects.filter(status=1)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        return context
+
 
 def property_detail(request, slug):
     """
@@ -55,6 +60,7 @@ def property_detail(request, slug):
 
     property_item = get_object_or_404(queryset, slug=slug)
     context = {"property": property_item, "images": property_item.images.all()}
+    context['current_user'] = user if user.is_authenticated else None
     return render(request, 'property/detail.html', context)
 
 
@@ -75,6 +81,11 @@ class PropertyWizard(LoginRequiredMixin, SessionWizardView):
         images_form.save()
         messages.success(self.request, 'Property added successfully')
         return HttpResponseRedirect(reverse('property_detail', args=[property_form.slug]))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        return context
 
 
 class EditProperty(UpdateView):
@@ -99,6 +110,11 @@ class EditProperty(UpdateView):
     def get_success_url(self):
         return self.object.get_absolute_url()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        return context
+
 
 class AddImage(generic.CreateView):
     model = PropertyImage
@@ -118,6 +134,7 @@ class AddImage(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
         return context
 
 
@@ -131,6 +148,12 @@ class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         messages.success(self.request, 'Property deleted successfully')
         return reverse_lazy('property_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        return context
+
+
 
 class EditImages(LoginRequiredMixin, generic.ListView):
     model = PropertyImage
@@ -143,6 +166,7 @@ class EditImages(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
         return context
 
 
@@ -159,6 +183,11 @@ class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         messages.success(self.request, 'Image updated successfully')
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        return context
+
 
 class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = PropertyImage
@@ -170,3 +199,7 @@ class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         messages.success(self.request, 'Image deleted successfully')
         return self.object.property.get_absolute_url()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        return context

@@ -97,7 +97,6 @@ class PropertyImage(models.Model):
         """
         ordering = ['created_on']
         verbose_name = "Property Image"
-        verbose_name_plural = "Property Images"
 
     def __str__(self):
         """
