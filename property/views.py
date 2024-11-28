@@ -13,7 +13,9 @@ from django.core.files.storage import DefaultStorage
 from django.db.models import Q
 from django.utils.text import slugify
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic.edit import DeleteView
 from formtools.wizard.views import SessionWizardView
 from .models import Property, PropertyImage
 from .forms import PropertyForm, PropertyImageForm
@@ -117,4 +119,14 @@ class AddImage(generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
         return context
-    
+
+
+class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Property
+
+    def test_func(self):
+        return self.get_object().owner == self.request.user
+
+    def get_success_url(self):
+        messages.success(self.request, 'Property deleted successfully')
+        return reverse_lazy('property_list')
