@@ -5,10 +5,18 @@
         PropertyList: - Display a list of properties using the Property Model.
         property_detail: - Display an individual property.
 """
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
+from django.http import HttpResponseRedirect
+from django.core.files.storage import DefaultStorage
 from django.db.models import Q
+from django.utils.text import slugify
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin 
+from formtools.wizard.views import SessionWizardView
 from .models import Property
+from .forms import PropertyForm, PropertyImageForm
 
 
 # Create your views here.
@@ -46,3 +54,22 @@ def property_detail(request, slug):
     property_item = get_object_or_404(queryset, slug=slug)
     context = {"property": property_item, "images": property_item.images.all()}
     return render(request, 'property/detail.html', context)
+
+
+class PropertyWizard(LoginRequiredMixin, SessionWizardView):
+    """
+        Display a form to create a new :model: property.
+    """
+    file_storage = DefaultStorage()
+    form_list = [PropertyForm, PropertyImageForm]
+    template_name = 'property/new.html'
+
+    def done(self, form_list, **kwargs):
+        property_form = form_list[0].save(commit=False)
+        property_form.owner_id = self.request.user.id
+        property_form.save()
+        images_form = form_list[1].save(commit=False)
+        images_form.property = property_form
+        images_form.save()
+        messages.success(self.request, 'Property added successfully')
+        return HttpResponseRedirect(reverse('property_detail', args=[property_form.slug]))

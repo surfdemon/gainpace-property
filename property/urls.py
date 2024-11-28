@@ -19,6 +19,7 @@ from property.views import PropertyList
 from . import views
 
 urlpatterns = [
+    path('new/', views.PropertyWizard.as_view(), name='new_property'),
     path('<slug:slug>/', views.property_detail, name='property_detail'),
     path('', PropertyList.as_view(), name='property_list'),
 ]
