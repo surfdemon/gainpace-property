@@ -22,7 +22,11 @@
         {% else %}
           <h1 class="post-title m-4">{{ property.title }}</h1>
         {% endif %}
-      
+        {% if request.user.is_authenticated and request.user == property.owner %}
+          <a href="{% url 'edit_property' property.slug %}" class="btn btn-primary mt-2">Edit</a>
+          <a href="{% url 'add_image' property.slug %}" class="btn btn-primary mt-2">Add Image</a>
+         
+        {% endif %}
         <!-- Post author goes before the | the post's created date goes after -->
       </div>
       <div class="row g-0" style="justify-content: center;">

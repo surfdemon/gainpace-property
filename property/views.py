@@ -7,15 +7,15 @@
 """
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
+from django.views.generic.edit import UpdateView
 from django.http import HttpResponseRedirect
 from django.core.files.storage import DefaultStorage
 from django.db.models import Q
 from django.utils.text import slugify
 from django.contrib import messages
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from formtools.wizard.views import SessionWizardView
-from .models import Property
+from .models import Property, PropertyImage
 from .forms import PropertyForm, PropertyImageForm
 
 
@@ -73,3 +73,48 @@ class PropertyWizard(LoginRequiredMixin, SessionWizardView):
         images_form.save()
         messages.success(self.request, 'Property added successfully')
         return HttpResponseRedirect(reverse('property_detail', args=[property_form.slug]))
+
+
+class EditProperty(UpdateView):
+    """
+        Display a form to edit an existing :model:'property.property'.
+    """
+    model = Property
+    form_class = PropertyForm
+    template_name = 'property/edit.html'
+    context_object_name = 'property'
+
+    def get_queryset(self):
+        user = self.request.user
+        return Property.objects.filter(owner=user)
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.slug = slugify(f"{form.instance.title}-{form.instance.id}")
+        messages.success(self.request, 'Property updated successfully')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+
+class AddImage(generic.CreateView):
+    model = PropertyImage
+    form_class = PropertyImageForm
+    template_name = 'property/add_image.html'
+    context_object_name = 'property_image'
+
+    def form_valid(self, form):
+        property_to_update = get_object_or_404(Property, slug=self.kwargs['slug'])
+        form.instance.property = property_to_update
+        messages.success(self.request, 'Image added successfully')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.property.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
+        return context
+    
