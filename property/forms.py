@@ -1,7 +1,6 @@
 from .models import Property, PropertyImage
 from django import forms
 
-
 class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
@@ -33,8 +32,8 @@ class PropertyForm(forms.ModelForm):
             'featured',
             )
 
+
 class PropertyImageForm(forms.ModelForm):
     class Meta:
         model = PropertyImage
-        fields =  ('image', 'title', 'description', )
-
+        fields = ('image', 'title', 'description', )
