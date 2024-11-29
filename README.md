@@ -2,13 +2,12 @@
 
 
 ## Purpose 
-The purpose of gainpace property is to allow landlords to advertise properties that they have for rent and for renters to be able to find properties that are for rent.   
+The purpose of gainpace property is to allow me (and friends that are landlords) to advertise properties that they have for rent and for renters to be able to find properties that are for rent.   
 
-This is a MVP so the aim is for it to have the base functionality. However, there are many more features and functionality that can be added in the future.
+This is an MVP so the aim is for it to have the base functionality. However, there are many more features and functionality that can be added in the future.
 
 ## User Stories 
   User Stories have been setup in Github Issues on the repository 
-
 
 ### Must Have User Stories 
  
@@ -39,22 +38,23 @@ As a site visitor, I want to view approved property listings so that I can find 
   * Acceptance Criteria: 
     * web page that lists the properties that have been approved
 
-
 ### Should Have User Stories 
+
 * User Story [#4] - Image Management - As a property owner, I want to upload and manage multiple images for my property so that I can showcase different aspects of the property.
   * Acceptance Criteria: 
     * Ability to add more images for a property
     * Ability to be able to change images for a property
     * Ability to delete image for property
 
-### Could Have User Stories 
-
- 
-
 ## Design Decisions 
 
-## Apps
+I have decided to keep the design clean and simple, mainly focusing on the base functionality. 
 
+## Apps
+The project has 2 apps, Page and Property. 
+
+**Property App** Is for the property listings
+**Page** App is for the pages on the site such as the home page 
 
 ## Database
 For this project I've decided that 3 tables are needed extending off the user table provided by Django. 
@@ -72,8 +72,8 @@ This should allow a user to have multiple properties and for a property to have 
 ### Wireframes 
   Wirfeframes have been created with the Balsamiq Wireframes program.
 
-[Wireframes](./assets/images/gainpace-property-wireframes.pdf)
-![Wireframes](./assets/images/gainpace-property-wireframe.png)
+  [Wireframes](./assets/images/gainpace-property-wireframes.pdf)
+  ![Wireframes](./assets/images/gainpace-property-wireframe.png)
 
   #### Colours
 
@@ -92,19 +92,20 @@ This should allow a user to have multiple properties and for a property to have 
 
   
 ## Github 
+
+### Github Project 
+  Following Agile I have used to get hump projects to keep track of the project - [Github Project](https://github.com/users/surfdemon/projects/11)
+
 ### Github Issues 
   Github Issues has been used as part of the Agile process for logging user stories. 
-
   
 ## Features Implementation 
 
+
 ### Navigation 
   The navidagion has been implemented using a Bootstrap navbar without an un-ordered list. It is fixed top so that it stays at the top of the screen as you scroll down the page.
-
   
 ### Core Features (Must Haves)
-    
-
   
 
   
@@ -113,9 +114,6 @@ This should allow a user to have multiple properties and for a property to have 
 
 
   
-
-### Optional Features (Could Haves)
-
 
   
 

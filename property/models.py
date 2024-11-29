@@ -108,4 +108,4 @@ class PropertyImage(models.Model):
         """
         Return absolute url for property detail.
         """
-        return reverse('property_detail', args=[self.property.slug]) 
+        return reverse('property_detail', args=[self.property.slug])
