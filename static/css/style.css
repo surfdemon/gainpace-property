@@ -1,3 +1,9 @@
+:root { 
+    --menu-bar-background: rgb(37, 99, 235);
+    --menu-bar-color: white;
+    
+}
+
 .h-100 { 
     max-height: 330px;
 }
@@ -16,6 +22,36 @@ html, body {
     display: flex; 
     flex-direction: column;
 }
+
+nav { 
+    background-color: var(--menu-bar-background);
+    color: var(--menu-bar-color);
+}
+
+.navbar-brand { 
+    font-size: x-large; 
+    font-weight: 600;
+}
+.navbar-light .navbar-brand { 
+    color: var(--menu-bar-color);
+}
+
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link{
+    color: var(--menu-bar-color);
+}
+
+.navbar-light .navbar-nav .nav-link { 
+    color: var(--menu-bar-color);
+}
+
+.navbar-light .navbar-text { 
+    color: var(--menu-bar-color);
+}
+
+.fa-solid, .fa-house {
+    font-size: xx-large;
+}
+
 
 main { 
     flex: 1;
