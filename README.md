@@ -100,21 +100,56 @@ This should allow a user to have multiple properties and for a property to have 
   Github Issues has been used as part of the Agile process for logging user stories. 
   
 ## Features Implementation 
+* User Story [#1] - has been implemented using allauth. The base.html template shows the links for sign up link, login link and logout link based on if the current user is authenticated or now. I have used CSS to hide the password requirements and Javascript to show them when either of the password input fields are selected.
 
+* User Story [#2] - has been implemented using allauth. 
+
+* User Story [#3] - when a use is logged in they get the option to add a property. A link to the page for this is shown in the menu bar if the ucurrent user is authenticad. 
+
+When adding a property, I have used SessionWizardView from formtools. The first form gathers information about the property and the second form lets the user add an image to the property. More images can then be added once the property has been added to the system. 
+
+* User Story [#5] - When the property has been added, it is added as a draft and the admin is able to change the status of the property to published in the admin area. 
+//TODO - Add the ability to change a property status to publish from the front end as an admin 
+
+<!-- 
+Property Review System - 
+As an administrator, I want to review and manage property listings so that I can ensure quality content on the platform.
+  * Acceptance Criteria: 
+    * When a property is added, it should be added as a draft
+    * Ability to change the status of a property in the admin area -->
+
+* User Story [#6] - The adimn can use the admin area to change the status of a property and also change any other details for a property as they see fit. 
+
+//TODO - Make it so that an admin can change the status to draft for a property if they want to from the front end without needing to go into the admin area
+
+<!-- Property Moderation - 
+As an administrator, I want to moderate existing property listings so that I can maintain platform quality over time.
+  * Acceptance Criteria: 
+    * Ability to edit properties within the admin area -->
+
+
+* User Story [#7] - All properties that have a status of published can be seen on the main properties listing page by any visitor regardless of if they are authenticated or not. 
+
+
+<!-- Public property listings - 
+As a site visitor, I want to view approved property listings so that I can find properties I'm interested in.
+  * Acceptance Criteria: 
+    * web page that lists the properties that have been approved -->
+
+
+
+* User Story [#4] - If the user viewing a property is authenticated and they are the owner of the propeprty, they then have tho option of editing the property listing. They have to edit the property details or edit the images for the property. They can delete images, edit images or add more images to the property.
+
+
+<!-- Image Management - As a property owner, I want to upload and manage multiple images for my property so that I can showcase different aspects of the property.
+  * Acceptance Criteria: 
+    * Ability to add more images for a property
+    * Ability to be able to change images for a property
+    * Ability to delete image for property -->
 
 ### Navigation 
   The navidagion has been implemented using a Bootstrap navbar without an un-ordered list. It is fixed top so that it stays at the top of the screen as you scroll down the page.
   
-### Core Features (Must Haves)
-  
-
-  
-
-### Advanced Features (Should Haves)
-
-
-  
-
   
 
 ## Testing and Validation 
@@ -150,3 +185,12 @@ The project is deployed using:
   * Google fonts css snippets taken from the Google fonts site and then altered. 
 
 ## Final Improvements
+
+
+<!-- 
+TODO: Add info about future enhancements.... 
+  - Search feature 
+  - Ability to allow people to apply for a viewing through the site if they don't have a Google form link.
+  -  
+  
+  -->
