@@ -26,10 +26,12 @@
                                     </div>
                                 </div>
                                 <div class="card-body d-flex flex-column">
-                                    <a href="{% url 'property_detail' property.slug %}" class="post-link">
-                                        <h2 class="card-title text-secondary">{{ property.title }}</h2>
+                                    <p class="card-title text-secondary">{{ property.title }}</p>
+                                    <p class="card-text">£{{ property.rent }}</p>
+                                    <p class="card-text text-danger">Waiting to be Authorised!</p>
+                                    <a href="{% url 'property_detail' property.slug %}" class="btn btn-primary post-link">
+                                        <p class="card-text">View Property</p>
                                     </a>
-                                    <p class="card-text text-secondary">Waiting to be Authorised!</p>
                                 </div>
                             </div>
                         {% else %}
@@ -42,8 +44,10 @@
                                     </div>
                                 </div>
                                 <div class="card-body d-flex flex-column">
-                                    <a href="{% url 'property_detail' property.slug %}" class="post-link">
-                                        <h2 class="card-title">{{ property.title }}</h2>
+                                    <p class="card-title">{{ property.title }}</p>
+                                    <p class="card-text">£{{ property.rent }}</p>
+                                    <a href="{% url 'property_detail' property.slug %}" class="btn btn-primary post-link">
+                                        <p class="card-text">View Property</p>
                                     </a>
                                 </div>
                             </div>
@@ -58,8 +62,10 @@
                                 </div>
                             </div>
                             <div class="card-body d-flex flex-column">
-                                <a href="{% url 'property_detail' property.slug %}" class="post-link">
-                                    <h2 class="card-title">{{ property.title }}</h2>
+                                <p class="card-title">{{ property.title }}</p>
+                                <p class="card-text">£{{ property.rent }}</p>
+                                <a href="{% url 'property_detail' property.slug %}" class="btn btn-primary post-link">
+                                    <p class="card-text">View Property</p>
                                 </a>
                             </div>
                         </div>

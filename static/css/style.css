@@ -52,6 +52,13 @@ nav {
     font-size: xx-large;
 }
 
+.fa-solid, .fa-check { 
+    font-size: large;
+}
+
+.fa-solid, .fa-cross { 
+    font-size: large;
+}
 
 main { 
     flex: 1;
