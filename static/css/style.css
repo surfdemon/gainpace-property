@@ -68,7 +68,6 @@ main {
     flex-direction: column;
 }
 
-
 .footer { 
     flex-shrink: 0;
     background-color: var(--footer-bg-color);

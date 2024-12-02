@@ -109,7 +109,7 @@ This should allow a user to have multiple properties and for a property to have 
 When adding a property, I have used SessionWizardView from formtools. The first form gathers information about the property and the second form lets the user add an image to the property. More images can then be added once the property has been added to the system. 
 
 * User Story [#5] - When the property has been added, it is added as a draft and the admin is able to change the status of the property to published in the admin area. 
-//TODO - Add the ability to change a property status to publish from the front end as an admin 
+<!-- //TODO - Add the ability to change a property status to publish from the front end as an admin  -->
 
 <!-- 
 Property Review System - 
@@ -120,7 +120,7 @@ As an administrator, I want to review and manage property listings so that I can
 
 * User Story [#6] - The adimn can use the admin area to change the status of a property and also change any other details for a property as they see fit. 
 
-//TODO - Make it so that an admin can change the status to draft for a property if they want to from the front end without needing to go into the admin area
+<!-- //TODO - Make it so that an admin can change the status to draft for a property if they want to from the front end without needing to go into the admin area -->
 
 <!-- Property Moderation - 
 As an administrator, I want to moderate existing property listings so that I can maintain platform quality over time.
