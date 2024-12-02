@@ -1,0 +1,23 @@
+document.addEventListener('DOMContentLoaded', function() {
+    var passwordInput = document.getElementById('id_password1');
+    var passwordInput2 = document.getElementById('id_password2');
+    var ulElement = document.querySelector('form ul');
+console.log(passwordInput);
+    if (passwordInput && ulElement) {
+        passwordInput.addEventListener('focus', function() {
+            ulElement.style.display = 'block';
+        });
+
+        passwordInput2.addEventListener('focus', function() {
+            ulElement.style.display = 'block';
+        });
+
+        passwordInput.addEventListener('blur', function() {
+            ulElement.style.display = 'none';
+        });
+        passwordInput2.addEventListener('blur', function() {
+            ulElement.style.display = 'none';
+        });
+
+    }
+});
