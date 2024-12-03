@@ -5,6 +5,10 @@
     --footer-text-color: white;
 }
 
+* { 
+    user-drag: none;
+}
+
 .h-100 {
     max-height: 330px;
 }
