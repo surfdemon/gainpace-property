@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The purpose of gainpace property is to allow me (and friends that are landlords) to advertise properties that they have for rent and for renters to be able to find properties that are for rent.
+The purpose of gainpace property is to allow me to advertise properties that they have for rent on a site that I control. I can then use the links to this site when advertising for new tenants.
 
 This is an MVP so the aim is for it to have the base functionality. However, there are many more features and functionality that can be added in the future.
 
