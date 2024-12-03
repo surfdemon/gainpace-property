@@ -124,10 +124,14 @@ Github has been used for source control and also for its project board and issue
 
   Following Agile I have used to get hump projects to keep track of the project - [Github Project](https://github.com/users/surfdemon/projects/11)
 
+![Github Project Board](/assets/images/gainpace-property-github-project-board.png)
+
 ### Github Issues
 
   Github Issues has been used as part of the Agile process for logging user stories.
   
+![Github Issues](/assets/images/gainpace-property-github-issues.png)
+
 ## Features Implementation
 
 * User Story [#1] - has been implemented using allauth. The base.html template shows the links for sign up link, login link and logout link based on if the current user is authenticated or now. I have used CSS to hide the password requirements and Javascript to show them when either of the password input fields are selected.
@@ -154,6 +158,14 @@ When adding a property, I have used SessionWizardView from formtools. The first 
   The navidagion has been implemented using a Bootstrap navbar without an un-ordered list. It is fixed top so that it stays at the top of the screen as you scroll down the page.
   
 ## Testing and Validation
+
+For testing and validation I did manual testing of the site along with lintersn in VS Code and used online validators.
+
+### VS Code Linters
+
+* ESLint - for Javascript
+* Flake8 - for Python
+* markdownlint - for Markdown
 
 ### Testing Results
   
