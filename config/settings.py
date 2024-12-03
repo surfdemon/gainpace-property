@@ -27,7 +27,6 @@ cloudinary.config(
     api_secret=os.environ.get('API_SECRET'),
 )
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -44,7 +43,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost", 
+    "http://localhost",
     "https://*.herokuapp.com"
 ]
 
@@ -152,7 +151,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -163,7 +161,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
