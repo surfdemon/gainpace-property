@@ -1,5 +1,7 @@
 # Gainpace Property
 
+![Gainpace Property Responsive Screenshot](/assets/images/gainpace-property-responsive.png)
+
 ## Purpose
 
 The purpose of gainpace property is to allow me (and friends that are landlords) to advertise properties that they have for rent and for renters to be able to find properties that are for rent.
