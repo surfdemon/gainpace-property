@@ -2,7 +2,6 @@
 {% load crispy_forms_tags %}
 {% load cloudinary %}
 
-
 {% block head %}
 {{ wizard.form.media }}
 {% endblock %}
@@ -27,11 +26,11 @@
                 </table>
                 {% if wizard.steps.prev %}
                 <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">first step
-                    </button>
+                </button>
                 <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">prev step
-                    </button>
+                </button>
                 {% endif %}
-                <input type="submit" value="submit"/>
+                <input type="submit" value="submit" />
             </form>
         </div>
     </div>
