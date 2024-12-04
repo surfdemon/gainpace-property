@@ -22,7 +22,7 @@
         {% else %}
         <h1 class="post-title m-4">{{ property.title }}</h1>
         {% endif %}
-        {% if request.user.is_authenticated and request.user == property.owner %}
+        {% if request.user.is_authenticated and request.user == property.owner or request.user.is_staff %}
         <a href="{% url 'edit_property' property.slug %}" class="btn btn-primary my-2 mx-1">Edit</a>
         <a href="{% url 'add_image' property.slug %}" class="btn btn-primary my-2 mx-1">Add Image</a>
         <a href="{% url 'edit_images' property.slug %}" class="btn btn-primary my-2 mx-1">Edit Images</a>
@@ -234,5 +234,5 @@
 {% endblock content %}
 
 {% block extras %}
-<script src="{% static '/property/js/property_details.js' %}"></script>
+<!-- <script src="{% static '/property/js/property_details.js' %}"></script> -->
 {% endblock %}

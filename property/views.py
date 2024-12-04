@@ -33,9 +33,11 @@ class PropertyList(generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_authenticated:
+        if user.is_authenticated and user.is_staff:
+            return Property.objects.all()
+        elif user.is_authenticated:
             return Property.objects.filter(
-                Q(status=1) | Q(status=0, owner=user)
+                Q(status=1) | Q(status=0, owner=user) 
             )
         else:
             return Property.objects.filter(status=1)
@@ -51,7 +53,9 @@ def property_detail(request, slug):
         Display an individual :model: property.
     """
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated and user.is_staff:
+        queryset = Property.objects.all()
+    elif user.is_authenticated:
         queryset = Property.objects.filter(
             Q(status=1) | Q(status=0, owner=user)
         )
@@ -99,20 +103,28 @@ class EditProperty(UpdateView):
 
     def get_queryset(self):
         user = self.request.user
-        return Property.objects.filter(owner=user)
+        if user.is_authenticated and user.is_staff:
+            return Property.objects.all()
+        else:
+            return Property.objects.filter(owner=user)
 
     def form_valid(self, form):
-        form.instance.owner = self.request.user
-        form.instance.slug = slugify(f"{form.instance.title}-{form.instance.id}")
-        messages.success(self.request, 'Property updated successfully')
-        return super().form_valid(form)
+        if form.instance.owner != self.request.user:
+            form.instance.slug = slugify(f"{form.instance.title}-{form.instance.id}")
+            messages.success(self.request, 'Property updated successfully')
+            return super().form_valid(form)
+        else: 
+            form.instance.owner = self.request.user
+            form.instance.slug = slugify(f"{form.instance.title}-{form.instance.id}")
+            messages.success(self.request, 'Property updated successfully')
+            return super().form_valid(form)
 
     def get_success_url(self):
         return self.object.get_absolute_url()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
         return context
 
 
@@ -134,7 +146,7 @@ class AddImage(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
         return context
 
 
@@ -142,7 +154,7 @@ class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Property
 
     def test_func(self):
-        return self.get_object().owner == self.request.user
+        return self.get_object().owner == self.request.user or self.request.user.is_staff
 
     def get_success_url(self):
         messages.success(self.request, 'Property deleted successfully')
@@ -150,7 +162,7 @@ class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
         return context
 
 
@@ -166,7 +178,7 @@ class EditImages(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
         return context
 
 
@@ -177,7 +189,7 @@ class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     context_object_name = 'image'
 
     def test_func(self):
-        return self.get_object().property.owner == self.request.user 
+        return self.get_object().property.owner == self.request.user or self.request.user.is_staff
 
     def form_valid(self, form):
         messages.success(self.request, 'Image updated successfully')
@@ -185,7 +197,7 @@ class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
         return context
 
 
@@ -193,7 +205,7 @@ class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = PropertyImage
 
     def test_func(self):
-        return self.get_object().property.owner == self.request.user
+        return self.get_object().property.owner == self.request.user or self.request.user.is_staff
 
     def get_success_url(self):
         messages.success(self.request, 'Image deleted successfully')
@@ -201,5 +213,5 @@ class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
         return context
