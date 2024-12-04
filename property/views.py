@@ -1,9 +1,5 @@
 """
     This file creates the views for the property app.
-
-    ''Views'': 
-        PropertyList: - Display a list of properties using the Property Model.
-        property_detail: - Display an individual property.
 """
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
@@ -37,14 +33,16 @@ class PropertyList(generic.ListView):
             return Property.objects.all()
         elif user.is_authenticated:
             return Property.objects.filter(
-                Q(status=1) | Q(status=0, owner=user) 
+                Q(status=1) | Q(status=0, owner=user)
             )
         else:
             return Property.objects.filter(status=1)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
@@ -84,11 +82,17 @@ class PropertyWizard(LoginRequiredMixin, SessionWizardView):
         images_form.property = property_form
         images_form.save()
         messages.success(self.request, 'Property added successfully')
-        return HttpResponseRedirect(reverse('property_detail', args=[property_form.slug]))
+        return HttpResponseRedirect(
+                reverse(
+                        'property_detail', 
+                        args=[property_form.slug])
+                        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated else None
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
@@ -110,12 +114,16 @@ class EditProperty(UpdateView):
 
     def form_valid(self, form):
         if form.instance.owner != self.request.user:
-            form.instance.slug = slugify(f"{form.instance.title}-{form.instance.id}")
+            form.instance.slug = slugify(
+                f"{form.instance.title}-{form.instance.id}"
+                )
             messages.success(self.request, 'Property updated successfully')
             return super().form_valid(form)
-        else: 
+        else:
             form.instance.owner = self.request.user
-            form.instance.slug = slugify(f"{form.instance.title}-{form.instance.id}")
+            form.instance.slug = slugify(
+                f"{form.instance.title}-{form.instance.id}"
+                )
             messages.success(self.request, 'Property updated successfully')
             return super().form_valid(form)
 
@@ -124,18 +132,26 @@ class EditProperty(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
 class AddImage(generic.CreateView):
+    """
+        Display a form to add an image to an existing property.
+    """
     model = PropertyImage
     form_class = PropertyImageForm
     template_name = 'property/add_image.html'
     context_object_name = 'property_image'
 
     def form_valid(self, form):
-        property_to_update = get_object_or_404(Property, slug=self.kwargs['slug'])
+        property_to_update = get_object_or_404(
+            Property, 
+            slug=self.kwargs['slug']
+            )
         form.instance.property = property_to_update
         messages.success(self.request, 'Image added successfully')
         return super().form_valid(form)
@@ -145,16 +161,26 @@ class AddImage(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
-        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
+        context['property'] = get_object_or_404(
+            Property, 
+            slug=self.kwargs['slug']
+            )
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
 class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+        Handle delete a property.
+    """
     model = Property
 
     def test_func(self):
-        return self.get_object().owner == self.request.user or self.request.user.is_staff
+        return self.get_object().owner == (
+            self.request.user or self.request.user.is_staff
+        )
 
     def get_success_url(self):
         messages.success(self.request, 'Property deleted successfully')
@@ -162,12 +188,16 @@ class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
-
 class EditImages(LoginRequiredMixin, generic.ListView):
+    """
+        Display list of images for editing.
+    """
     model = PropertyImage
     template_name = 'property/edit_images.html'
     context_object_name = 'images'
@@ -177,19 +207,29 @@ class EditImages(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['property'] = get_object_or_404(Property, slug=self.kwargs['slug'])
-        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
+        context['property'] = get_object_or_404(
+            Property, 
+            slug=self.kwargs['slug']
+            )
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
 class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+        Display a form to edit an existing image.
+    """
     model = PropertyImage
     form_class = PropertyImageForm
     template_name = 'property/edit_image.html'
     context_object_name = 'image'
 
     def test_func(self):
-        return self.get_object().property.owner == self.request.user or self.request.user.is_staff
+        return self.get_object().property.owner == (
+            self.request.user or self.request.user.is_staff
+        )
 
     def form_valid(self, form):
         messages.success(self.request, 'Image updated successfully')
@@ -197,15 +237,22 @@ class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
 
 
 class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+        Handle delete an image.
+    """
     model = PropertyImage
 
     def test_func(self):
-        return self.get_object().property.owner == self.request.user or self.request.user.is_staff
+        return self.get_object().property.owner == (
+            self.request.user or self.request.user.is_staff
+        )
 
     def get_success_url(self):
         messages.success(self.request, 'Image deleted successfully')
@@ -213,5 +260,7 @@ class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['current_user'] = self.request.user if self.request.user.is_authenticated or self.request.user.is_staff else None
+        context['current_user'] = (
+            self.request.user if self.request.user.is_authenticated else None
+        )
         return context
