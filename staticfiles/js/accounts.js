@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    /* add event listeners to hide and show password criteria as 
+    needed on sign up scree */ 
     var passwordInput = document.getElementById('id_password1');
     var passwordInput2 = document.getElementById('id_password2');
     var ulElement = document.querySelector('form ul');
@@ -18,6 +20,5 @@ console.log(passwordInput);
         passwordInput2.addEventListener('blur', function() {
             ulElement.style.display = 'none';
         });
-
     }
 });
