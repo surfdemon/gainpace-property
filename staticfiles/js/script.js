@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () =>{
-    console.log('Page Loaded');
+    /* Add timer to hide messages after a set time */
     setTimeout(() => {
         var messages = document.querySelectorAll('.alert');
         messages.forEach((message) => {

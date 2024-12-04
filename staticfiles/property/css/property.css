@@ -1,4 +1,5 @@
-.fa-check { 
+/* Change colours of the tick and cross on property details pages */ 
+.fa-check {
     color: green;
 }
 
@@ -6,6 +7,7 @@
     color: red;
 }
 
+/* Displaying properties on the properties list page */
 .custom-card {
     display: flex;
     flex-direction: column;
