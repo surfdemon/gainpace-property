@@ -27,6 +27,10 @@ cloudinary.config(
     api_secret=os.environ.get('API_SECRET'),
 )
 
+cloudinary = {
+    'secure': True
+}
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -88,7 +92,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-X_FRAME_OPTIONS = 'ALLOWALL'
+# X_FRAME_OPTIONS = 'ALLOWALL'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
