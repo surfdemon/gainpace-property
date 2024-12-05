@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block head %}
+<title>{{ property.title }} - For Rent in Newquay</title>
+<meta name="description" content="Property available to rent in Newquay - {{ property.description }}">
 <link rel="stylesheet" type="text/css" href="/static/property/css/property.css">
 {% endblock head %}
 
@@ -78,7 +80,7 @@
   <div class="row">
     <div class="col card mb-4 mt-5 left top">
       <div class="card-body">
-        <h3>Overview</h3>
+        <h2>Overview</h2>
         <hr>
         <div class="row">
           <div class="col-6">
@@ -101,7 +103,7 @@
     <div class="col card mb-5 left top">
       <div class="card-body">
         <!-- Use the | safe filter inside the template tags -->
-        <h3>Description</h3>
+        <h2>Description</h2>
         <hr>
         <p class="card-text">
           {{ property.description | safe }}
@@ -114,7 +116,7 @@
 <div class="container">
   <div class="row justify-content-between">
     <div class="card col-5 mb-4 top">
-      <h4 class="m-4">Price &amp; Bills</h4>
+      <h2 class="m-4">Price &amp; Bills</h2>
       <hr>
       <div class="card-body">
         <ul>
@@ -144,7 +146,7 @@
       </div>
     </div>
     <div class="card col-5 mb-4 top">
-      <h4 class="m-4">Tenants Preference</h4>
+      <h2 class="m-4">Tenants Preference</h2>
       <hr>
       <div class="card-body">
         <ul>
@@ -175,7 +177,7 @@
   </div>
   <div class="row justify-content-between">
     <div class="card col-5 mb-4 ">
-      <h4 class="m-4">Availability</h4>
+      <h2 class="m-4">Availability</h2>
       <hr>
       <div class="card-body">
         <ul>
@@ -185,7 +187,7 @@
       </div>
     </div>
     <div class="card col-5 mb-4 top">
-      <h4 class="m-4">Features</h4>
+      <h2 class="m-4">Features</h2>
       <hr>
       <div class="card-body">
         <ul>
