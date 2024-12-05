@@ -1,4 +1,5 @@
 from .models import Property, PropertyImage
+from django_summernote.widgets import SummernoteWidget
 from django import forms
 
 
@@ -35,6 +36,9 @@ class PropertyForm(forms.ModelForm):
             "dss",
             "featured",
         )
+        widgets = {
+            "description": SummernoteWidget(),
+        }
 
 
 class PropertyImageForm(forms.ModelForm):
