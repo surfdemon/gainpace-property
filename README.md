@@ -2,11 +2,13 @@
 
 ![Gainpace Property Responsive Screenshot](/assets/images/gainpace-property-responsive.png)
 
+Live Site Link = [Gainpace Property](https://gainpace-property-aa2d5954f843.herokuapp.com/)
+
 ## Purpose
 
-The purpose of gainpace property is to allow me to advertise properties that I have for rent on a site that I control. I can then use the links to this site when advertising for new tenants.
+The purpose of gainpace property is to allow me to advertise properties that I have for rent on a site that I control. I can then use the links to this site when advertising for new tenants. As such the register link will probably be removed in the future as it is not intended for just anyone to sign up. The idea is that users end up at this site by clicking a link on an advert on social media or by scanning a QR code on a flyer that I have distributed.
 
-This is an MVP so the aim is for it to have the base functionality. However, there are many more features and functionality that can be added in the future.
+This is an MVP so the aim is for it to have the base functionality. However, there are many more features and functionality that can be added in the future if it was intended to be used as a proper property advertising site that allows other landlords to sign up and advertise their properties.
 
 ## User Stories
 
@@ -61,15 +63,15 @@ The project has 2 apps, Page and Property.
 
 **Page** App is for the pages on the site such as the home page
 
-***Note:*** The property app is not needed for the initial MVP. It is includeed for future enhancements when/if pages are required on the site.
+***Note:*** The page app is not needed for the initial MVP. It is includeed for future enhancements when/if pages are required on the site.
 
 ## Database
 
-The database is a Postgres database hosted at [Neon Tech](https://neon.tech/). I have decided to use neon tech from the start, instead of a Postgres database, because this is something that I will be using in the future so will need continued access and use of the database.
+The database is a Postgres database hosted at [Neon Tech](https://neon.tech/). I have decided to use neon tech from the start, instead of a database from CodeInstitute, because this is something that I will be using in the future so will need continued access and use of the database.
 
 For this project I've decided that 3 tables are needed extending off the user table provided by Django.
 
-A **Page table** for holding all the information about the pages app.
+A **Page table** for holding all the information about the pages app. (Not implemented in this MVP).
 
 A **Property table** for holding all the infomation about the proerties.
 
@@ -85,7 +87,7 @@ This should allow a user to have multiple properties and for a property to have 
 
 Wirfeframes have been created with the Balsamiq Wireframes program.
 
-[Wireframes](./assets/images/gainpace-property-wireframes.pdf)
+[Wireframes PDF version](./assets/images/gainpace-property-wireframes.pdf)
 ![Wireframes](./assets/images/gainpace-property-wireframe.png)
 
 #### Colours
@@ -98,7 +100,7 @@ Colours have been tested with [Adobe Color Accessibility Tool](https://color.ado
 
 #### Font
 
-For fonts, I have picked two fonts from [Google fonts](https://fonts.google.com/)
+For fonts, I have picked two fonts from [Google fonts](https://fonts.google.com/). I have picked these because I think they are clean/clear and easy to read.
 
 [Montserrat](https://fonts.google.com/specimen/Montserrat) has been selected for the majority of the text on the page.
 [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) has been selected for the logo.
@@ -123,13 +125,15 @@ The Favicon was made using an online [Favicon Generator](https://favicon.io/favi
 
 ## Github
 
-Github has been used for source control and also for its project board and issues tracker for issues and user stories as part of Agile.
+Github has been used for source control and also for its project board and issues tracker for issues and user stories as part of the Agile process.
 
 ### Github Project
 
-Following Agile I have used to get hump projects to keep track of the project - [Github Project](https://github.com/users/surfdemon/projects/11)
+Following Agile I have used Github projects to keep track of the project - [Github Project](https://github.com/users/surfdemon/projects/11)
 
 ![Github Project Board](/assets/images/gainpace-property-github-project-board.png)
+
+**Note:** I choose not to use a Backlog column as I felt it was not required for this small project.
 
 ### Github Issues
 
@@ -141,27 +145,34 @@ Github Issues has been used as part of the Agile process for logging user storie
 
 * User Story [#1] - has been implemented using allauth. The base.html template shows the links for sign up link, login link and logout link based on if the current user is authenticated or now. I have used CSS to hide the password requirements and Javascript to show them when either of the password input fields are selected.
 
+![Menu Area Logged Out](./assets/images/gainpace-property-menu-area-logged-out.png)
+
 * User Story [#2] - has been implemented using allauth.
 
 * User Story [#3] - when a use is logged in they get the option to add a property. A link to the page for this is shown in the menu bar if the ucurrent user is authenticad.
 
 When adding a property, I have used SessionWizardView from formtools. The first form gathers information about the property and the second form lets the user add an image to the property. More images can then be added once the property has been added to the system.
 
+![Add Property Page](./assets/images/gainpace-property-add-property-screen.png)
+
 * User Story [#5] - When the property has been added, it is added as a draft and the admin is able to change the status of the property to published in the admin area.
-<!-- //TODO - Add the ability to change a property status to publish from the front end as an admin  -->
 
 * User Story [#6] - The adimn can use the admin area to change the status of a property and also change any other details for a property as they see fit.
 
-<!-- //TODO - Make it so that an admin can change the status to draft for a property if they want to from the front end without needing to go into the admin area -->
+![Properties Admin Area](./assets/images/gainpace-property-admin-area.png)
 
 * User Story [#7] - All properties that have a status of published can be seen on the main properties listing page by any visitor regardless of if they are authenticated or not.
 
 * User Story [#4] - If the user viewing a property is authenticated and they are the owner of the propeprty, they then have tho option of editing the property listing. They have to edit the property details or edit the images for the property. They can delete images, edit images or add more images to the property.
 
+![Properties Screen](./assets/images/gainpace-property-propertyies-screen.png)
+
 ### Navigation
 
 The navidagion has been implemented using a Bootstrap navbar without an un-ordered list. It is fixed top so that it stays at the top of the screen as you scroll down the page.
-  
+
+When on a mobile view the menu collapses and shows a hamburger menu icon to expand and collapse the menu.
+
 ## Testing and Validation
 
 For testing and validation I did manual testing of the site along with lintersn in VS Code and used online validators.
@@ -176,15 +187,60 @@ I used the following extensions in VS Code for helping identify code formating p
 
 ### Testing Results
 
+//TODO: Testing results
+
+### Google Lighthouse
+
+I have tested the site with Google Lighthouse tests and it scores 99 for Performance, 100 for Accessibility, 100 for Best practices, and 100 for SEO.
+
+![Lighthouse Results](./assets/images/gainpace-property-lighthouse-desktop-results.png)
+
+These are the areas that need improvement.
+
+![Lighthouse Performance Results](./assets/images/gainpace-property-lighthouse-performance-results.png)
+
+As the images are all photos that are uploaded through the site, improving them falls under future improvements.
+
 ### Validation
+
+I have ran all pages through the online validators:
+
+* [online css validator](https://jigsaw.w3.org/css-validator/)
+* [online html validator](https://validator.w3.org/)
+
+All pass apart from the new property page which has an error. The code that errors is code that has been generated by Crispy Forms in conjunction with [Formtools session wizard view](https://django-formtools.readthedocs.io/en/latest/).
 
 ## Deployment
 
-The project is deployed using:
+The project has been deployed using:
 
 * [Heroku](https://heroku.com/) for hosting Django.
 * [Cloudinary](https://cloudinary.com/) for hosting images.
 * [Noen Tech](https://neon.tech/) for the postgresql database.
+
+To deploy this, you will need an account with each of them along with some knowledge of what they are and how to use them.
+
+You will need an env.py file that has the following variables defined
+
+* SECRET_KEY
+* DATABASE_URL
+* CLOUDINARY_URL
+* CLOUD_NAME
+* API_KEY
+* API_SECRET
+
+Using os.environ.setdefault, see the env-example.py file for an example of this. Simply fill in the values with your own and rename the file to env.py.
+
+These also need to be added to the config vars in the Heroku app settings.
+
+You can either deploy from github through Heroku or deploy to Heroku using the Heroku Cli.
+
+If you are deploying locally you will need to have Python 3.13 and then run:
+
+    pip3 install -r requirements.txt
+
+You should then be able to run:
+    python3 manage.py runserver
 
 ### AI Tools
 
