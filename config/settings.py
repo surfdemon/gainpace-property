@@ -31,13 +31,10 @@ cloudinary.config(
 SUMMERNOTE_CONFIG = { 
     'attachment_storage_class':
     'cloudinary_storage.storage.MediaCloudinaryStorage',
-
     'attachment_url':
     'https://res.cloudinary.com/'
     + os.environ.get('CLOUD_NAME') +
     '/raw/upload/{filename}',
-
-
 }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
