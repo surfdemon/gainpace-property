@@ -28,6 +28,9 @@ class PropertyList(generic.ListView):
     paginate_by = 6
 
     def get_queryset(self):
+        """
+            Return a queryset based on the user's authentication status and property status.
+        """
         user = self.request.user
         if user.is_authenticated and user.is_staff:
             return Property.objects.all()
@@ -39,6 +42,9 @@ class PropertyList(generic.ListView):
             return Property.objects.filter(status=1)
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['current_user'] = (
             self.request.user if self.request.user.is_authenticated else None
@@ -75,6 +81,9 @@ class PropertyWizard(LoginRequiredMixin, SessionWizardView):
     template_name = 'property/new.html'
 
     def done(self, form_list, **kwargs):
+        """
+            Save the property and images to the database.
+        """
         property_form = form_list[0].save(commit=False)
         property_form.owner_id = self.request.user.id
         property_form.save()
@@ -89,6 +98,9 @@ class PropertyWizard(LoginRequiredMixin, SessionWizardView):
                         )
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['current_user'] = (
             self.request.user if self.request.user.is_authenticated else None
@@ -106,6 +118,9 @@ class EditProperty(UpdateView):
     context_object_name = 'property'
 
     def get_queryset(self):
+        """
+            Return a queryset based on the user's authentication status.
+        """
         user = self.request.user
         if user.is_authenticated and user.is_staff:
             return Property.objects.all()
@@ -113,6 +128,9 @@ class EditProperty(UpdateView):
             return Property.objects.filter(owner=user)
 
     def form_valid(self, form):
+        """
+            Save the property to the database.
+        """
         if form.instance.owner != self.request.user:
             form.instance.slug = slugify(
                 f"{form.instance.title}-{form.instance.id}"
@@ -128,9 +146,15 @@ class EditProperty(UpdateView):
             return super().form_valid(form)
 
     def get_success_url(self):
+        """
+            Redirect to the property's detail page.
+        """
         return self.object.get_absolute_url()
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.    
+        """
         context = super().get_context_data(**kwargs)
         context['current_user'] = (
             self.request.user if self.request.user.is_authenticated else None
@@ -148,6 +172,9 @@ class AddImage(generic.CreateView):
     context_object_name = 'property_image'
 
     def form_valid(self, form):
+        """
+            Save the image to the database
+        """
         property_to_update = get_object_or_404(
             Property, 
             slug=self.kwargs['slug']
@@ -157,9 +184,15 @@ class AddImage(generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        """
+            Redirect to the property's detail page.
+        """
         return self.object.property.get_absolute_url()
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(
             Property, 
@@ -178,15 +211,24 @@ class DeletePropertyView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Property
 
     def test_func(self):
+        """
+            Check if the user is the owner of the property.
+        """
         return self.get_object().owner == (
             self.request.user or self.request.user.is_staff
         )
 
     def get_success_url(self):
+        """
+            Redirect to the property list page.
+        """
         messages.success(self.request, 'Property deleted successfully')
         return reverse_lazy('property_list')
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['current_user'] = (
             self.request.user if self.request.user.is_authenticated else None
@@ -203,9 +245,15 @@ class EditImages(LoginRequiredMixin, generic.ListView):
     context_object_name = 'images'
 
     def get_queryset(self):
+        """
+            Return a queryset of images based on the property's slug.
+        """
         return PropertyImage.objects.filter(property__slug=self.kwargs['slug'])
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['property'] = get_object_or_404(
             Property, 
@@ -227,15 +275,24 @@ class EditImageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     context_object_name = 'image'
 
     def test_func(self):
+        """
+            Check if the user is the owner of the property.
+        """
         return self.get_object().property.owner == (
             self.request.user or self.request.user.is_staff
         )
 
     def form_valid(self, form):
+        """
+            Save the image to the database.
+        """
         messages.success(self.request, 'Image updated successfully')
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['current_user'] = (
             self.request.user if self.request.user.is_authenticated else None
@@ -250,15 +307,24 @@ class DeleteImageView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = PropertyImage
 
     def test_func(self):
+        """
+            Check if the user is the owner of the property.
+        """
         return self.get_object().property.owner == (
             self.request.user or self.request.user.is_staff
         )
 
     def get_success_url(self):
+        """
+            Redirect to the property's detail page.
+        """
         messages.success(self.request, 'Image deleted successfully')
         return self.object.property.get_absolute_url()
 
     def get_context_data(self, **kwargs):
+        """
+            Add the current user to the context.
+        """
         context = super().get_context_data(**kwargs)
         context['current_user'] = (
             self.request.user if self.request.user.is_authenticated else None
